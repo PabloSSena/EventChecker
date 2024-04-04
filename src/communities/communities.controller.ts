@@ -17,18 +17,9 @@ export class CommunitiesController {
     return this.communitiesService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.communitiesService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.communitiesService.findOne(id);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateCommunityDto: UpdateCommunityDto) {
-  //   return this.communitiesService.update(+id, updateCommunityDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.communitiesService.remove(+id);
-  // }
 }

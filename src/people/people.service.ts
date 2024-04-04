@@ -3,13 +3,16 @@ import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { Person } from './entities/person.entity';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import { Communitie } from 'schemas/communitie.schema';
+import { Community } from 'src/communities/entities/community.entity';
 
 @Injectable()
 export class PeopleService {
-  constructor(@InjectModel(
-    Person.name
-    ) private PersonModel: Model<Person>){
+  constructor(
+    @InjectModel(Person.name) private PersonModel: Model<Person>,
+    @InjectModel(Communitie.name) private CommunitieModel: Model<Communitie>
+    ){
 
   }
 
@@ -18,19 +21,36 @@ export class PeopleService {
     return createdPerson.save();
   }
 
-  CheckIn(id: number) {
-    return `This action returns a #${id} person`;
+  async CheckIn(id: string) {
+    const convertedId = new mongoose.Types.ObjectId(id);
+    const person = await this.PersonModel.findById(convertedId);
+    const eventId = person.communitie_id;
+    console.log(person);
+
+    const updatedEvent = await this.CommunitieModel.findByIdAndUpdate(
+      eventId,{$inc:{checkIn: 1}},
+      {new:true}
+    )  
+    
+    return updatedEvent;
+
   }
 
-  CheckOut(id: number) {
-    return `This action returns a #${id} person`;
+  async CheckOut(id: string) {
+    const convertedId = new mongoose.Types.ObjectId(id);
+    const person = await this.PersonModel.findById(convertedId);
+    const eventId = person.communitie_id;
+
+    const updateCheckIn = await this.CommunitieModel.findByIdAndUpdate(
+      eventId,{$inc:{checkIn: -1}},
+      {new:true}
+    )
+    const updateCheckOut = await this.CommunitieModel.findByIdAndUpdate(
+      eventId,{$inc:{checkOut: 1}},
+      {new:true}
+    )  
+    
+    return updateCheckOut;
   }
 
-  update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} person`;
-  }
 }

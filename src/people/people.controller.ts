@@ -12,13 +12,14 @@ export class PeopleController {
     return this.peopleService.create(createPersonDto);
   }
 
-  @Patch(':id')
-  CheckIn(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
-    return this.peopleService.update(+id, updatePersonDto);
+  @Patch(':id/checkin')
+  CheckIn(@Param('id') id: string) {
+    return this.peopleService.CheckIn(id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.peopleService.remove(+id);
+  @Patch(':id/checkout')
+  CheckOut(@Param('id') id: string) {
+    return this.peopleService.CheckOut(id);
   }
+
 }

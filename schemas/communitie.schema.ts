@@ -9,6 +9,12 @@ export type CommunitieDocument = HydratedDocument<Communitie>
 export class Communitie{
     @Prop({required:true})
     name:string
+
+    @Prop({ default: 0 })
+    checkIn:Number
+
+    @Prop({ default: 0 })
+    checkOut:Number
 }
 
 export const CommunitieSchema = SchemaFactory.createForClass(Communitie);

@@ -3,7 +3,7 @@ import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Communitie } from 'schemas/communitie.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 
 @Injectable()
 export class CommunitiesService {
@@ -21,15 +21,12 @@ export class CommunitiesService {
     return this.CommunitieModel.find().exec();
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} community`;
-  // }
+  findOne(id: string) {
+    const convertedId = new mongoose.Types.ObjectId(id)
 
-  // update(id: number, updateCommunityDto: UpdateCommunityDto) {
-  //   return `This action updates a #${id} community`;
-  // }
+    const commu = this.CommunitieModel.findById(convertedId);
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} community`;
-  // }
+    return commu;
+  }
+
 }
