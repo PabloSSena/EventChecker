@@ -29,4 +29,11 @@ export class CommunitiesService {
     return commu;
   }
 
+  async Delete(id: string) {
+    const convertedId = new mongoose.Types.ObjectId(id);
+    const commu  = await this.CommunitieModel.deleteOne(convertedId);
+
+    return commu;
+  }
+
 }

@@ -21,6 +21,7 @@ export class PeopleService {
     return createdPerson.save();
   }
 
+  //O número de pessoas que estão no evento será o numero do checkIn
   async CheckIn(id: string) {
     const convertedId = new mongoose.Types.ObjectId(id);
     const person = await this.PersonModel.findById(convertedId);
@@ -53,4 +54,11 @@ export class PeopleService {
     return updateCheckOut;
   }
 
+  async Delete(id: string) {
+    const convertedId = new mongoose.Types.ObjectId(id);
+
+    const person = await this.PersonModel.deleteOne(convertedId);
+
+    return person;
+  }
 }

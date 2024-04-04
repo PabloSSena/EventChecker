@@ -22,4 +22,9 @@ export class CommunitiesController {
     return this.communitiesService.findOne(id);
   }
 
+  @Delete(':id')
+  Delete(@Param('id') id: string) {
+    return this.communitiesService.findOne(id);
+  }
+
 }

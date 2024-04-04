@@ -22,4 +22,8 @@ export class PeopleController {
     return this.peopleService.CheckOut(id);
   }
 
+  @Delete(':id')
+  Delete(@Param('id') id: string){
+    return this.peopleService.Delete(id);
+  }
 }
